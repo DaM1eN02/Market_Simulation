@@ -18,8 +18,10 @@ public class Main {
     public static Thread Consumer5;
 
     public static void main(String[] args){
-        Marketplace marketplace = Marketplace.getMarket();
+        startThreads();
+    }
 
+    public static void startThreads() {
         Supplier1 = new Supplier();
         Supplier2 = new Supplier();
         Supplier3 = new Supplier();
@@ -32,8 +34,16 @@ public class Main {
         Consumer4 = new Consumer();
         Consumer5 = new Consumer();
 
+        Supplier1.start();
+        Supplier2.start();
+        Supplier3.start();
         Producer1.start();
         Producer2.start();
         Producer3.start();
+        Consumer1.start();
+        Consumer2.start();
+        Consumer3.start();
+        Consumer4.start();
+        Consumer5.start();
     }
 }
