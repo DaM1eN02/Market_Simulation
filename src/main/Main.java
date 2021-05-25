@@ -4,6 +4,10 @@ import main.actors.Consumer;
 import main.actors.Producer;
 import main.actors.Supplier;
 
+/**
+ * @author Jannik Szopa
+ */
+
 public class Main {
     static Marketplace marketplace = Marketplace.getMarket();
     static Thread Supplier1 = new Supplier();
@@ -19,6 +23,9 @@ public class Main {
     static Thread Consumer5 = new Consumer();
 
     public static void main(String[] args) {
+        /**
+         * The time of 1-25
+         */
         for (int time = 1; time <= 25; time++) {
             System.out.println("Phase " + time);
             System.out.println();
@@ -27,12 +34,18 @@ public class Main {
                 startThreads();
             }
 
+            /**
+             * A while-loop which waits till every Thread stopped, so all jobs are finished in a time scale
+             */
             while (Supplier1.isAlive() || Supplier2.isAlive() || Supplier3.isAlive() || Producer1.isAlive() || Producer2.isAlive() || Producer3.isAlive() || Consumer1.isAlive() || Consumer2.isAlive() || Consumer3.isAlive() || Consumer4.isAlive()|| Consumer5.isAlive()) { }
             output();
             runThreads();
         }
     }
 
+    /**
+     * A method to output the data from the marketplace
+     */
     public static void output() { // All output functions
         System.out.println();
         System.out.println("Material 1: " + marketplace.goods[1]);
@@ -51,6 +64,9 @@ public class Main {
         System.out.println();
     }
 
+    /**
+     * A method, which separately starts the run method and does not start the Thread again
+     */
     public static void runThreads() {
         Supplier1.run();
         Supplier2.run();
@@ -65,6 +81,9 @@ public class Main {
         Consumer5.run();
     }
 
+    /**
+     * A method, which initialized the Threads
+     */
     public static void startThreads() {
         Supplier1.start();
         Supplier2.start();
@@ -78,7 +97,9 @@ public class Main {
         Consumer4.start();
         Consumer5.start();
 
-        // To make the whole program Thread safe
+        /**
+         * The possibility to make other threads to interrupt this thread
+         */
         try {
             Supplier1.join();
             Supplier2.join();
@@ -92,7 +113,7 @@ public class Main {
             Consumer4.join();
             Consumer5.join();
         } catch (InterruptedException e) {
-            System.out.println("Thread are able to interrupt another");
+            e.printStackTrace();
         }
     }
 }
