@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Market Simulation:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Market_Simulation_jar</output-path>
+    <root id="archive" name="Market Simulation.jar">
+      <element id="module-output" name="Market Simulation" />
+    </root>
+  </artifact>
+</component>

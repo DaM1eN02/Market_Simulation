@@ -5,35 +5,67 @@ import main.actors.Producer;
 import main.actors.Supplier;
 
 public class Main {
-    public static Thread Supplier1;
-    public static Thread Supplier2;
-    public static Thread Supplier3;
-    public static Thread Producer1;
-    public static Thread Producer2;
-    public static Thread Producer3;
-    public static Thread Consumer1;
-    public static Thread Consumer2;
-    public static Thread Consumer3;
-    public static Thread Consumer4;
-    public static Thread Consumer5;
+    static Marketplace marketplace = Marketplace.getMarket();
+    static Thread Supplier1 = new Supplier();
+    static Thread Supplier2 = new Supplier();
+    static Thread Supplier3 = new Supplier();
+    public static Thread Producer1 = new Producer();
+    public static Thread Producer2 = new Producer();
+    public static Thread Producer3 = new Producer();
+    static Thread Consumer1 = new Consumer();
+    static Thread Consumer2 = new Consumer();
+    static Thread Consumer3 = new Consumer();
+    static Thread Consumer4 = new Consumer();
+    static Thread Consumer5 = new Consumer();
 
-    public static void main(String[] args){
-        startThreads();
+    public static void main(String[] args) {
+        for (int time = 1; time <= 25; time++) {
+            System.out.println("Phase " + time);
+            System.out.println();
+
+            if (time == 1) {
+                startThreads();
+            }
+
+            while (Supplier1.isAlive() || Supplier2.isAlive() || Supplier3.isAlive() || Producer1.isAlive() || Producer2.isAlive() || Producer3.isAlive() || Consumer1.isAlive() || Consumer2.isAlive() || Consumer3.isAlive() || Consumer4.isAlive()|| Consumer5.isAlive()) { }
+            output();
+            runThreads();
+        }
+    }
+
+    public static void output() { // All output functions
+        System.out.println();
+        System.out.println("Material 1: " + marketplace.goods[1]);
+        System.out.println("Material 2: " + marketplace.goods[2]);
+        System.out.println("Material 3: " + marketplace.goods[3]);
+        System.out.println("Material 4: " + marketplace.goods[4]);
+        System.out.println("Material 5: " + marketplace.goods[5]);
+        System.out.println();
+        System.out.println("Product 1: " + marketplace.goods[6]);
+        System.out.println("Product 2: " + marketplace.goods[7]);
+        System.out.println("Product 3: " + marketplace.goods[8]);
+        System.out.println("Product 4: " + marketplace.goods[9]);
+        System.out.println("Product 5: " + marketplace.goods[10]);
+        System.out.println("Product 6: " + marketplace.goods[11]);
+        System.out.println();
+        System.out.println();
+    }
+
+    public static void runThreads() {
+        Supplier1.run();
+        Supplier2.run();
+        Supplier3.run();
+        Producer1.run();
+        Producer2.run();
+        Producer3.run();
+        Consumer1.run();
+        Consumer2.run();
+        Consumer3.run();
+        Consumer4.run();
+        Consumer5.run();
     }
 
     public static void startThreads() {
-        Supplier1 = new Supplier();
-        Supplier2 = new Supplier();
-        Supplier3 = new Supplier();
-        Producer1 = new Producer();
-        Producer2 = new Producer();
-        Producer3 = new Producer();
-        Consumer1 = new Consumer();
-        Consumer2 = new Consumer();
-        Consumer3 = new Consumer();
-        Consumer4 = new Consumer();
-        Consumer5 = new Consumer();
-
         Supplier1.start();
         Supplier2.start();
         Supplier3.start();
@@ -45,5 +77,22 @@ public class Main {
         Consumer3.start();
         Consumer4.start();
         Consumer5.start();
+
+        // To make the whole program Thread safe
+        try {
+            Supplier1.join();
+            Supplier2.join();
+            Supplier3.join();
+            Producer1.join();
+            Producer2.join();
+            Producer3.join();
+            Consumer1.join();
+            Consumer2.join();
+            Consumer3.join();
+            Consumer4.join();
+            Consumer5.join();
+        } catch (InterruptedException e) {
+            System.out.println("Thread are able to interrupt another");
+        }
     }
 }
