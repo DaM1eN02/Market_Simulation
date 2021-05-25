@@ -16,7 +16,7 @@ public class Supplier extends Thread{
         for (int count = 1; count <= numberOfItems; count++) {
             this.materialIndex = (int) (Math.random() * 5) + 1; // The number of the materialIndex (For simplicity I included the possibility for one Material being selected twice)
             this.materialCount = (int) (Math.random() * 10) + 1; // The number of the materialCount which is produced per material
-            this.storage.add(materialIndex,materialCount);
+            this.storage.goods[materialIndex] = this.storage.goods[materialIndex] + materialCount;
             System.out.println(this.getName() + " created " + materialCount + " of Material " + materialIndex);
         }
 
